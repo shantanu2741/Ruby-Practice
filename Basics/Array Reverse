@@ -1,0 +1,2 @@
+arr = [2,3,5,6,7,1,7]
+p arr.reverse
