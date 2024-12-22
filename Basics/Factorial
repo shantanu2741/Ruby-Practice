@@ -1,0 +1,7 @@
+fact = 1
+n = 5
+for i in 1 .. n
+    fact = fact * i 
+end
+
+p fact
