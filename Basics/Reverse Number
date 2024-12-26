@@ -1,5 +1,5 @@
 
-n = 35425
+i) n = 35425
 
 rev = 0
 rem = 0
@@ -10,3 +10,5 @@ while(n>0)
 end
 
 puts rev
+
+
