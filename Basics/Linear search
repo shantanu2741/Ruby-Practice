@@ -1,0 +1,10 @@
+i) arr = [9, 4, 5, 4, 6, 7, 3, 23, 23, 45]
+
+target =453
+for i in 0 ..arr.length-1
+  if(arr[i]==target)
+    p "Found"
+  end 
+end
+
+ii) arr.include?(4)
