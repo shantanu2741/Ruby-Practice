@@ -1,0 +1,5 @@
+arr=["Mango","Banana","Apple","Pear","Jackfruit"]
+
+all_vowels = arr.select{|i| i.match?(/\A[aeiouAEIOU]/)}
+
+p all_vowels
