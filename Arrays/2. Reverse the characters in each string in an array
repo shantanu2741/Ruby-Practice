@@ -1,0 +1,3 @@
+reverse_strings = arr.each{ |i| i.reverse!}
+
+p reverse_strings
