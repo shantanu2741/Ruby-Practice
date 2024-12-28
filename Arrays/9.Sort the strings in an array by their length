@@ -1,0 +1,1 @@
+all_words_contains_e = arr.sort_by{|i| i.length}
