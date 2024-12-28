@@ -1,0 +1,5 @@
+all_length = arr.select do |i|
+    length_count = i.scan(/[aeiouAEIOU]/).size
+    length_count>3
+end
+p all_length
