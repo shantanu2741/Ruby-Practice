@@ -1,0 +1,5 @@
+
+r = 0
+all_pallindrome = arr.each do |word|
+  r += word.size
+end
