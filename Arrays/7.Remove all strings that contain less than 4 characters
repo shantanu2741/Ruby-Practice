@@ -1,0 +1,9 @@
+
+all_char_less_than_four= arr.reject{|i| i.length<4}
+remove_three = arr.select do |i|
+    count = i.size
+    if count<3
+        delete(arr[i])
+    end
+end
+p all_char_less_than_four
