@@ -1,3 +1,4 @@
 all_char_less_than_four= arr.reject{|i| i.length<4}
 
 p all_char_less_than_four
+ 
