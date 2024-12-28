@@ -1,5 +1,6 @@
-
-r = 0
+1) r = 0
 all_pallindrome = arr.each do |word|
   r += word.size
 end
+
+2) all_sum= arr.map(&:length).sum
