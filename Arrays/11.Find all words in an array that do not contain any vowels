@@ -1,0 +1,2 @@
+all_word_without_vowels=arr.reject{|word| word.match?(/[aeiouAEIOU]/)}
+
