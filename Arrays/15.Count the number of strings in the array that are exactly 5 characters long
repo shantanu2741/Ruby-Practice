@@ -1,0 +1,2 @@
+
+five_chars_long = arr.select{ |i| i.length==5}
