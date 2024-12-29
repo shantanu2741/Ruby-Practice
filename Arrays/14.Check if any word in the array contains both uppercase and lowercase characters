@@ -1,0 +1,2 @@
+both_upcase_and_lowcase = arr.reject{ |i| i.include?(i.upcase && i.downcase)}
+p both_upcase_and_lowcase
