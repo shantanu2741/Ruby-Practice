@@ -1,0 +1,3 @@
+upcaseAll=arr.each{|word| word.upcase!}
+
+p upcaseAll
