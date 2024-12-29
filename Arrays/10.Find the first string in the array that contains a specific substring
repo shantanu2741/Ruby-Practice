@@ -1,0 +1,4 @@
+arr1= arr.each{|i| i.downcase!}
+p arr1
+all_words_contains_e = arr1.select{|i| i.include?('ap')}
+p all_words_contains_e[0]
