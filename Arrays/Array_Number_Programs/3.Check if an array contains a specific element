@@ -1,0 +1,1 @@
+arr_contains = arr.include?(3)
