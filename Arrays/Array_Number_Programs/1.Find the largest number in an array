@@ -1,0 +1,2 @@
+i) arr_max = arr.max_by{|i| i}
+ii) p arr.max
