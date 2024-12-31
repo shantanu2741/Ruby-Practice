@@ -3,7 +3,7 @@ class Myclass
   
   def initialize prompt,answer
     @prompt=prompt
-    @answer=answer
+    @answer=answer 
   end 
 end 
 
