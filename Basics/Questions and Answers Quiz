@@ -1,0 +1,39 @@
+class Myclass 
+  attr_accessor :prompt, :answer
+  
+  def initialize prompt,answer
+    @prompt=prompt
+    @answer=answer
+  end 
+end 
+
+p1 = "What is color of Banana: a)Yellow b)Orange c)Blue"
+p2 = "What is color of Orange: a)Yellow b)Orange c)Blue"
+p3 = "What is color of Blueberry: a)Yellow b)Orange c)Blue"
+
+
+question = [
+  obj=Myclass.new(p1,"a"),
+  obj1=Myclass.new(p2,"b"),
+  obj2=Myclass.new(p3,"c")
+]
+
+
+def myIterator questions
+
+  answer=""
+
+  count=0
+  questions.each do |ques|
+    puts ques.prompt 
+    answer=gets.chomp
+    if answer==ques.answer
+       count+=1
+    end
+
+  end 
+  puts "Your score: #{count}"
+
+end 
+
+myIterator question
