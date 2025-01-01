@@ -4,7 +4,7 @@ def find_missing_number(arr)
 
  missing = (1..(arr.length+1)).to_a-arr
 
- puts missing
+ puts missing 
 
 end
 
