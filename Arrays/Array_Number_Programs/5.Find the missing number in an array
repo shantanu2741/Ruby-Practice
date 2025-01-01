@@ -1,0 +1,11 @@
+arr = [1,2,3,5,6]
+
+def find_missing_number(arr)
+
+ missing = (1..(arr.length+1)).to_a-arr
+
+ puts missing
+
+end
+
+find_missing_number(arr)
