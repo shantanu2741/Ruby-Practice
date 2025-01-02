@@ -1,0 +1,4 @@
+
+arr =["Mango","Banana","Pear","Orange","Apple","Apple","apple"]
+arr_new = arr.select {|i| i.match?(/\A[aA]/)}
+p arr_new
