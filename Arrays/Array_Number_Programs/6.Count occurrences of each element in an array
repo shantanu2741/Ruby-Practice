@@ -1,0 +1,3 @@
+arr = ["yellow","Blue","Cake","cake"]
+arr1 = arr.map(&:downcase).tally
+p arr1
