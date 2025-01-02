@@ -1,0 +1,3 @@
+arr =["Mango","Banana","Pear","Orange","Apple","Apple","apple"]
+arr_new = arr.sort_by(&:length)
+p arr_new
