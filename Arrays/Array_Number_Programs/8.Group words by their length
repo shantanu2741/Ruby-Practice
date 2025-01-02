@@ -1,0 +1,4 @@
+
+arr =["Mango","Banana","Pear","Orange","Apple","Apple","apple"]
+arr_new = arr.group_by(&:length)
+p arr_new
