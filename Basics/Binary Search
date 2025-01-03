@@ -9,7 +9,7 @@ end1 = arr.length-1
               p mid
             break
           elsif arr[mid]> target 
-              end1=mid-1
+              end1=mid-1 
           else
               start=mid+1
        end
