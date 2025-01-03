@@ -9,7 +9,7 @@ for i in 0..n do
       arr[j]= arr[j + 1]
       arr[j + 1]=temp
     end
-  end
+  end 
 end 
 
 p arr
