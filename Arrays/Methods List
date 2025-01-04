@@ -1,0 +1,23 @@
+arr = [2,3,4,2,2,5,6,7,1]
+arr1 = [2,2,3,4,2,2,5,6,7,1]
+
+p arr.unshift(111) -- add in start
+p arr.append(115) -- add in last
+p arr.delete(7) -- delete specific index
+p arr.push(202) -- add in last 
+p arr.pop -- delete last element
+p arr <<3 -- to add in last
+p arr.max
+p arr.min 
+p arr.sort 
+p arr.first 
+p arr.last
+p arr.include?(90)
+p arr.tally -- To get count
+p arr.reverse
+p arr.empty?
+p arr.nil?
+p arr.eql?(arr1)
+p arr[4]=101 -- To append specific index
+p arr.uniq
+p arr.join
