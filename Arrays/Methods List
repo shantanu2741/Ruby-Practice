@@ -1,6 +1,7 @@
 arr = [2,3,4,2,2,5,6,7,1]
 arr1 =  [2,2,3,4,2,2,5,6,7,1]
- 
+
+p arr.count
 p arr.unshift(111) -- add in start
 p arr.append(115) -- add in last
 p arr.delete(7) -- delete specific index
