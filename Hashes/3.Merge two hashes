@@ -1,0 +1,8 @@
+h1 ={delhi: 101, pune: 102, chennai: 103, kolkata: 104, indore: 106}
+
+h2 ={london: 200, dubai: 201, tokyo: 203, johansberg: 204, amsterdam: 205}
+
+
+h3=h1.merge(h2)
+
+p h3

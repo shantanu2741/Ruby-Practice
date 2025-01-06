@@ -1,0 +1,7 @@
+hassh ={delhi: 101, pune: 102, chennai: 103, kolkata: 104}
+
+p hassh[:delhi] -- printing specific value
+
+hassh[:hyderbad]=105 -- adding new value
+
+hassh[:hyderbad]=106 -- updating added value

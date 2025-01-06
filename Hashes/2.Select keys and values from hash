@@ -1,0 +1,7 @@
+hassh ={delhi: 101, pune: 102, chennai: 103, kolkata: 104, indore: 106}
+
+i)arr =hassh.select {|k,v| p k} -- to print keys
+p hassh.keys
+
+ii)arr =hassh.select {|k,v| p v} -- to print values
+p hassh.values
