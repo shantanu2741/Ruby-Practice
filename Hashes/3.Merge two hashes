@@ -6,3 +6,4 @@ h2 ={london: 200, dubai: 201, tokyo: 203, johansberg: 204, amsterdam: 205}
 h3=h1.merge(h2)
 
 p h3
+ 
