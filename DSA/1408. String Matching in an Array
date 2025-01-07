@@ -1,0 +1,11 @@
+arr =["asar","as","ramkar","ram","ram"]
+arr1=[]
+
+arr.each_with_index do|word1, i|
+    arr.each_with_index do|words2, j|
+        if i!=j && word1.include?(words2)
+            arr1 << words2 unless arr1.include?(words2)
+        end 
+    end 
+end
+p arr1
