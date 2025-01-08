@@ -1,0 +1,12 @@
+
+def count_prefix_suffix_pairs(words)
+  count = 0
+
+  (0...words.size).each do |i|
+    (i + 1...words.size).each do |j|
+      count += 1 if words[j].start_with?(words[i]) && words[j].end_with?(words[i])
+    end
+  end
+
+  count
+end
