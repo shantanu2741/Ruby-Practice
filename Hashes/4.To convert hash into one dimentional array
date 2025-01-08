@@ -1,0 +1,3 @@
+h1 ={delhi: 101, pune: 102, chennai: 103, kolkata: 104, indore: 106}
+
+p h1.flatten
