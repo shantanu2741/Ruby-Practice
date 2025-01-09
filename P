@@ -1,0 +1,112 @@
+class Managegroup
+  @@gid = 0
+
+  def initialize
+    @groups = []
+  end
+
+  def create_group(gname)
+    @@gid += 1
+    group = Group.new(@@gid, gname)
+    @groups << group
+    puts "Group '#{gname}' created successfully with ID #{@@gid}."
+    group
+  end
+
+  def add_users_to_group(group, manageuser)
+    loop do
+      puts "Enter user ID to add to group (or 'done' to finish):"
+      input = gets.chomp
+
+      break if input.downcase == 'done'
+
+      uid = input.to_i
+      user = manageuser.find_by_id(uid)
+
+      if user
+        group.add_user(user)
+        puts "User '#{user.name}' added to group '#{group.gname}'."
+      else
+        puts "User ID #{uid} not found."
+      end
+    end
+  end
+
+  def view_groups
+    @groups.each(&:to_s)
+  end
+end
+class Group
+  attr_accessor :gid, :gname, :users
+
+  def initialize(gid, gname)
+    @gid = gid
+    @gname = gname
+    @users = [] # Initialize an empty array to store users
+  end
+
+  def add_user(user)
+    @users << user
+  end
+
+  def to_s
+    puts "Group ID: #{@gid}, Name: #{@gname}, Users: #{@users.map(&:name).join(', ')}"
+  end
+end
+managegroup = Managegroup.new
+manageuser = Manageuser.new
+
+loop do
+  puts "----------------------------------"
+  puts "Welcome to Splitwise"
+  puts "----------------------------------"
+
+  puts "Enter any key to continue or 'n' to exit:"
+  option = gets.chomp
+  break if option.downcase == "n"
+
+  puts "----------------------------------"
+  puts "1. Create User Account"
+  puts "2. Create a Group"
+  puts "3. Add Users to a Group"
+  puts "4. View All Users"
+  puts "5. View All Groups"
+  print "Enter your choice: "
+  choice = gets.chomp.to_i
+
+  case choice
+  when 1
+    puts "Enter your name: "
+    name = gets.chomp
+    puts "Enter your email: "
+    email = gets.chomp
+    puts "Enter your balance: "
+    balance = gets.chomp.to_i
+    manageuser.add_user(name, email, balance)
+
+  when 2
+    puts "Enter group name: "
+    gname = gets.chomp
+    group = managegroup.create_group(gname)
+
+  when 3
+    puts "Enter group ID to add users: "
+    gid = gets.chomp.to_i
+    group = managegroup.instance_variable_get(:@groups).find { |g| g.gid == gid }
+
+    if group
+      managegroup.add_users_to_group(group, manageuser)
+    else
+      puts "Group ID #{gid} not found."
+    end
+
+  when 4
+    manageuser.view_users
+
+  when 5
+    managegroup.view_groups
+
+  else
+    puts "Invalid choice. Please try again."
+  end
+end
