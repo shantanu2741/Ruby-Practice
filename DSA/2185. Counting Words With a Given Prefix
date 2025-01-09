@@ -1,9 +1,13 @@
-def prefix_count(words, pref)
+words = ["leetcode","win","loops","success"]
+ pref = "code"
+def prefix_count(words1, pref1)
     count=0
-    words.each do |word|
-        if word.start_with?(pref)
+    words1.each do |word|
+        if word.start_with?(pref1)
             count +=1
         end 
     end  
-    count
+    puts count
+  
 end
+prefix_count(words, pref)
