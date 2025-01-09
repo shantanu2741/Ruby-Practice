@@ -1,112 +1,137 @@
-class Managegroup
-  @@gid = 0
+class User
+  attr_accessor :id, :name
+
+  @@user_counter = 1
+
+  def initialize(name)
+    @id = @@user_counter
+    @name = name
+    @@user_counter += 1
+  end
+end
+class Expense
+  attr_accessor :amount, :paid_by, :split_between
+
+  def initialize(amount, paid_by, split_between)
+    @amount = amount
+    @paid_by = paid_by
+    @split_between = split_between
+  end
+
+  def split
+    split_amount = @amount / @split_between.size
+    @split_between.map { |user| [user, split_amount] }.to_h
+  end
+end
+class Balance
+  attr_accessor :balances
 
   def initialize
-    @groups = []
+    @balances = Hash.new(0)
   end
 
-  def create_group(gname)
-    @@gid += 1
-    group = Group.new(@@gid, gname)
-    @groups << group
-    puts "Group '#{gname}' created successfully with ID #{@@gid}."
-    group
+  def add_balance(paid_by, splits)
+    splits.each do |user, amount|
+      @balances[paid_by] += amount
+      @balances[user] -= amount
+    end
   end
 
-  def add_users_to_group(group, manageuser)
-    loop do
-      puts "Enter user ID to add to group (or 'done' to finish):"
-      input = gets.chomp
-
-      break if input.downcase == 'done'
-
-      uid = input.to_i
-      user = manageuser.find_by_id(uid)
-
-      if user
-        group.add_user(user)
-        puts "User '#{user.name}' added to group '#{group.gname}'."
-      else
-        puts "User ID #{uid} not found."
+  def show_balances
+    @balances.each do |user, balance|
+      if balance > 0
+        puts "#{user.name} is owed ₹#{balance.round(2)}"
+      elsif balance < 0
+        puts "#{user.name} owes ₹#{-balance.round(2)}"
       end
     end
   end
 
-  def view_groups
-    @groups.each(&:to_s)
+  def settle_balances
+    @balances.clear
+    puts "All balances are settled!"
   end
 end
-class Group
-  attr_accessor :gid, :gname, :users
+require_relative 'user'
+require_relative 'expense'
+require_relative 'balance'
 
-  def initialize(gid, gname)
-    @gid = gid
-    @gname = gname
-    @users = [] # Initialize an empty array to store users
+class SplitwiseApp
+  def initialize
+    @users = []
+    @balance_manager = Balance.new
   end
 
-  def add_user(user)
+  def add_user(name)
+    user = User.new(name)
     @users << user
+    puts "User #{name} added successfully!"
   end
 
-  def to_s
-    puts "Group ID: #{@gid}, Name: #{@gname}, Users: #{@users.map(&:name).join(', ')}"
+  def list_users
+    puts "Users:"
+    @users.each { |user| puts "#{user.id}. #{user.name}" }
   end
-end
-managegroup = Managegroup.new
-manageuser = Manageuser.new
 
-loop do
-  puts "----------------------------------"
-  puts "Welcome to Splitwise"
-  puts "----------------------------------"
+  def add_expense(amount, paid_by_id, split_between_ids)
+    paid_by = @users.find { |user| user.id == paid_by_id }
+    split_between = @users.select { |user| split_between_ids.include?(user.id) }
+    expense = Expense.new(amount, paid_by, split_between)
+    splits = expense.split
+    @balance_manager.add_balance(paid_by, splits)
+    puts "Expense of ₹#{amount} added successfully!"
+  end
 
-  puts "Enter any key to continue or 'n' to exit:"
-  option = gets.chomp
-  break if option.downcase == "n"
+  def show_balances
+    @balance_manager.show_balances
+  end
 
-  puts "----------------------------------"
-  puts "1. Create User Account"
-  puts "2. Create a Group"
-  puts "3. Add Users to a Group"
-  puts "4. View All Users"
-  puts "5. View All Groups"
-  print "Enter your choice: "
-  choice = gets.chomp.to_i
+  def settle_balances
+    @balance_manager.settle_balances
+  end
 
-  case choice
-  when 1
-    puts "Enter your name: "
-    name = gets.chomp
-    puts "Enter your email: "
-    email = gets.chomp
-    puts "Enter your balance: "
-    balance = gets.chomp.to_i
-    manageuser.add_user(name, email, balance)
+  def menu
+    loop do
+      puts "\n--- Splitwise App ---"
+      puts "1. Add User"
+      puts "2. List Users"
+      puts "3. Add Expense"
+      puts "4. Show Balances"
+      puts "5. Settle Balances"
+      puts "6. Exit"
+      print "Enter your choice: "
+      choice = gets.chomp.to_i
 
-  when 2
-    puts "Enter group name: "
-    gname = gets.chomp
-    group = managegroup.create_group(gname)
-
-  when 3
-    puts "Enter group ID to add users: "
-    gid = gets.chomp.to_i
-    group = managegroup.instance_variable_get(:@groups).find { |g| g.gid == gid }
-
-    if group
-      managegroup.add_users_to_group(group, manageuser)
-    else
-      puts "Group ID #{gid} not found."
+      case choice
+      when 1
+        print "Enter user name: "
+        name = gets.chomp
+        add_user(name)
+      when 2
+        list_users
+      when 3
+        print "Enter expense amount: "
+        amount = gets.chomp.to_f
+        print "Enter paid by user ID: "
+        paid_by_id = gets.chomp.to_i
+        print "Enter split between user IDs (comma-separated): "
+        split_between_ids = gets.chomp.split(',').map(&:to_i)
+        add_expense(amount, paid_by_id, split_between_ids)
+      when 4
+        show_balances
+      when 5
+        settle_balances
+      when 6
+        puts "Exiting... Goodbye!"
+        break
+      else
+        puts "Invalid choice. Please try again."
+      end
     end
-
-  when 4
-    manageuser.view_users
-
-  when 5
-    managegroup.view_groups
-
-  else
-    puts "Invalid choice. Please try again."
   end
 end
+
+# Start the app
+app = SplitwiseApp.new
+app.menu
+
