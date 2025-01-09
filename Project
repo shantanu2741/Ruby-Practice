@@ -1,0 +1,169 @@
+# lib/user.rb
+class User
+  attr_accessor :id, :name, :email, :balance
+
+  def initialize(id, name, email)
+    @id = id
+    @name = name
+    @email = email
+    @balance = 0.0
+  end
+end
+# lib/group.rb
+class Group
+  attr_accessor :id, :name, :users
+
+  def initialize(id, name)
+    @id = id
+    @name = name
+    @users = []
+  end
+
+  def add_user(user)
+    @users << user
+  end
+end
+# lib/expense.rb
+class Expense
+  attr_accessor :id, :amount, :payer, :participants, :description
+
+  def initialize(id, amount, payer, participants, description)
+    @id = id
+    @amount = amount
+    @payer = payer
+    @participants = participants
+    @description = description
+  end
+
+  def split
+    split_amount = @amount / @participants.size
+    @participants.each do |participant|
+      participant.balance -= split_amount
+    end
+    @payer.balance += @amount
+  end
+end
+# lib/splitwise.rb
+class Splitwise
+  attr_accessor :users, :groups, :expenses
+
+  def initialize
+    @users = []
+    @groups = []
+    @expenses = []
+  end
+
+  def add_user(user)
+    @users << user
+  end
+
+  def add_group(group)
+    @groups << group
+  end
+
+  def add_expense(expense)
+    expense.split
+    @expenses << expense
+  end
+
+  def show_balances
+    @users.each do |user|
+      puts "#{user.name} (#{user.email}): #{user.balance.round(2)}"
+    end
+  end
+end
+# main.rb
+require_relative 'lib/user'
+require_relative 'lib/group'
+require_relative 'lib/expense'
+require_relative 'lib/splitwise'
+
+# Initialize the app
+app = Splitwise.new
+
+def show_menu
+  puts "\n---- Splitwise Application ----"
+  puts "1. Add User"
+  puts "2. Create Group"
+  puts "3. Add Expense"
+  puts "4. Show Balances"
+  puts "5. Exit"
+  print "Enter your choice: "
+end
+
+loop do
+  show_menu
+  choice = gets.chomp.to_i
+
+  case choice
+  when 1
+    # Add a user
+    print "Enter user name: "
+    name = gets.chomp
+    print "Enter user email: "
+    email = gets.chomp
+    user_id = app.users.size + 1
+    app.add_user(User.new(user_id, name, email))
+    puts "User '#{name}' added successfully."
+
+  when 2
+    # Create a group
+    print "Enter group name: "
+    group_name = gets.chomp
+    group_id = app.groups.size + 1
+    group = Group.new(group_id, group_name)
+    
+    print "Enter user IDs to add to the group (comma-separated): "
+    user_ids = gets.chomp.split(',').map(&:to_i)
+    user_ids.each do |id|
+      user = app.users.find { |u| u.id == id }
+      if user
+        group.add_user(user)
+      else
+        puts "User ID #{id} not found."
+      end
+    end
+
+    app.add_group(group)
+    puts "Group '#{group_name}' created successfully."
+
+  when 3
+    # Add an expense
+    print "Enter payer user ID: "
+    payer_id = gets.chomp.to_i
+    payer = app.users.find { |u| u.id == payer_id }
+
+    if payer
+      print "Enter expense amount: "
+      amount = gets.chomp.to_f
+      print "Enter expense description: "
+      description = gets.chomp
+      print "Enter participant user IDs (comma-separated): "
+      participant_ids = gets.chomp.split(',').map(&:to_i)
+      participants = participant_ids.map { |id| app.users.find { |u| u.id == id } }.compact
+
+      if participants.empty?
+        puts "No valid participants found."
+      else
+        expense_id = app.expenses.size + 1
+        expense = Expense.new(expense_id, amount, payer, participants, description)
+        app.add_expense(expense)
+        puts "Expense '#{description}' of amount #{amount} added successfully."
+      end
+    else
+      puts "Payer ID #{payer_id} not found."
+    end
+
+  when 4
+    # Show balances
+    app.show_balances
+
+  when 5
+    # Exit
+    puts "Thank you for using Splitwise. Goodbye!"
+    break
+
+  else
+    puts "Invalid choice. Please try again."
+  end
+end
