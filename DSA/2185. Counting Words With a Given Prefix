@@ -1,0 +1,9 @@
+def prefix_count(words, pref)
+    count=0
+    words.each do |word|
+        if word.start_with?(pref)
+            count +=1
+        end 
+    end  
+    count
+end
