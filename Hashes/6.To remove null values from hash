@@ -1,0 +1,5 @@
+h1 ={ Name: "Ram", Age: "23",Address: "Pune", course: "CSE"}
+h1[:City]=nil
+
+p h1
+p h1.compact
