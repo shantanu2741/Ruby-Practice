@@ -1,3 +1,4 @@
 h1 ={ Name: "Ram", Age: "23",Address: "Pune", course: "CSE"}
 
 p h1.fetch(:Name,"Not found")
+ 
