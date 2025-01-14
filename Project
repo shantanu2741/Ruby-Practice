@@ -1,5 +1,5 @@
 # lib/user.rb
-class User
+class User 
   attr_accessor :id, :name, :email, :balance
 
   def initialize(id, name, email)
